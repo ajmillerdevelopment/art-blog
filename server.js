@@ -10,8 +10,9 @@ const blogController = require('./controllers/blog-controller.js')
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(methodOverride('_method'))
 
-app.get('/', (req, res)  => {res.render('home.ejs')})
 app.use('/users', userController);
+app.get('/', (req, res)  => {res.render('home.ejs')})
+
 
 app.set('view engine', 'ejs')
 app.listen(PORT, console.log(`Listening on ${PORT}`))
