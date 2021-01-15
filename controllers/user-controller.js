@@ -34,6 +34,17 @@ router.put('/:id', (req, res) => {
     db.User.findByIdAndUpdate(req.params.id, req.body, () => res.redirect('/'))
 })
 
+router.delete('/:id', (req, res) => {
+    db.User.findByIdAndDelete(req.params.id, (err, deletedUser) => {
+        if (err) {
+            console.log(err);
+            return res.send(err);
+        };
+        res.redirect('/');
+        console.log('Deleted user: ', deletedUser);
+    })
+})
+
 router.post('/', (req, res) => {
     const newUser = {}
     newUser.username = req.body.username;
