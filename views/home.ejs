@@ -9,6 +9,9 @@
     <a href="/collab">Collab Blog</a>
     <a href="/gallery">Gallery</a>
     <a href="/contact">Contact</a>
-    <a href="/users/new">DEV ONLY: Create a User</a>
+    <a href="/users/new">DEV ONLY: Create a User</a> <br>
+    <% for (let user of users) { %> 
+        <a href="/users/<%= user._id %>"><%= user.displayName %> </a>
+    <% } %> 
 </body>
 </html>
