@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(methodOverride('_method'))
 
 app.use('/users', userController);
+app.use('/blog', blogController)
 app.get('/', (req, res)  => {
     User.find({}, (err, foundUsers) => {
         res.render('home.ejs', {users: foundUsers})

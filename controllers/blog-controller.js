@@ -9,10 +9,10 @@ router.get('/:userId/new', (req, res) => {
             return res.send(err);
         }
         console.log('Creating new post for:', foundUser.displayName)
+        res.render('blog/newBlog', {user: foundUser});
     }); 
 
-    const context = {userId: userId};
-    res.render('blog/newBlog', context);
+
 })
 
 module.exports = router;
