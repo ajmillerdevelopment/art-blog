@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
             user: foundUser
         };
 
-        res.render('userNew', context);
+        res.render('userProfile.ejs', context);
     })
 })
 
