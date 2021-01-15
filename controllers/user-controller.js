@@ -24,7 +24,15 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.get('/:id/edit', (req, res) => {
+    db.User.findById(req.params.id, (err, foundUser) => {
+        res.render('userUpdate.ejs', {user: foundUser})
+    })
+})
 
+router.put('/:id', (req, res) => {
+    db.User.findByIdAndUpdate(req.params.id, req.body, () => res.redirect('/'))
+})
 
 router.post('/', (req, res) => {
     const newUser = {}
