@@ -10,12 +10,13 @@
         <h1>Collaborative Blog</h1>
 
         <div>
+            <% posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
             <% for (let i = 0; i < posts.length; i++) { %>
                 <% if (posts[i].crosspost) { %>
                     <h3><%= posts[i].title %></h3>
                     <p><%= posts[i].body %></p>
                     <br />
-                    <p><%= posts[i].editedAt %></p>
+                    <p><%= posts[i].updatedAt %></p>
                 <% } %>
              <% } %>
         </div>

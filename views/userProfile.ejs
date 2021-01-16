@@ -14,7 +14,7 @@
     <form action="./<%= user._id %>/?_method=DELETE" method="POST">
         <button type="submit">Delete Profile?</button>
     </form>
-
+    <% user.posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
     <% for (let i = 0; i < user.posts.length; i++) { %>
         <article>
             <h3><%= user.posts[i].title %></h3>

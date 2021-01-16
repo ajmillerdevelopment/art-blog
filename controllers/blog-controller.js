@@ -55,6 +55,8 @@ router.delete('/:postId', (req, res) => {
 router.get('/collab', (req, res) => {
     db.Post.find({}, (err, foundPosts) => {
         if (err) throw err;
+        foundPosts.sort((a, b) => {a.updatedAt - b.updatedAt})
+        console.log(foundPosts)
         const context = {
             posts: foundPosts
         };
