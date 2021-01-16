@@ -7,7 +7,7 @@ const postSchema = new Schema({
     author: {type: Schema.Types.ObjectId, ref: 'Author'},
     crosspost: Boolean,
     images: Array
-});
+}, {timestamps: true} );
 
 const Post = mongoose.model('Post', postSchema);
 
