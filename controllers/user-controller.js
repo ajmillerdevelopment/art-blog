@@ -9,7 +9,6 @@ router.get('/new', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-    let postsArray = [];
     const userId = req.params.id;
     db.User.findById(userId).populate('posts').exec((err, foundUser) => {
         if (err) throw err
