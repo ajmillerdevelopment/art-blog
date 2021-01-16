@@ -8,9 +8,11 @@ body {
     align-items: center;
     margin: 0;
     height: 100vh;
+    color: white;
+    text-shadow: 1px 1px grey;
 }
 h1 {
-    color: white;
+    
     text-shadow: 2px 2px gray;
     font-size: 56px;
     font-style: italic;
@@ -27,6 +29,6 @@ ul {
 }
 .navitem a {
     text-decoration: none;
-    color: white;
     text-transform: uppercase;
+    color: white;
 }
