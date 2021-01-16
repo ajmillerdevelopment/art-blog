@@ -40,7 +40,7 @@ router.put('/:postId', (req, res) => {
     }, (err, updatedPost) => {
         if (err) throw err;
         console.log(updatedPost);
-        res.redirect(`/`);
+        res.redirect(`/users/${updatedPost.author}`);
     })
 })
 
