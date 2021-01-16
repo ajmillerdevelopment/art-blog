@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('./partials/head') %> 
+    <%- include('./partials/head') %>
+    <link rel="stylesheet" href="/css/home.css">
     <title>Blog Home</title>
 </head>
 <body>
-    <a href="/collab">Collab Blog</a>
-    <a href="/gallery">Gallery</a>
-    <a href="/contact">Contact</a>
-    <a href="/users/new">DEV ONLY: Create a User</a> <br>
-    <% for (let user of users) { %> 
-        <a href="/users/<%= user._id %>"><%= user.displayName %> </a>
-    <% } %> 
+    <%- include('./partials/header') %> 
+    <%- include('./partials/nav') %> 
 </body>
 </html>
