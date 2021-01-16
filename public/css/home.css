@@ -11,8 +11,8 @@ main {
     border-radius: 20px;
 }
 .gallery {
-    flex-grow: 2;
+    flex-grow: 3;
 }
 .hero {
-    flex-grow: 3;
+    flex-grow: 2;
 }

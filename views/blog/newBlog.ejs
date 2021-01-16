@@ -5,7 +5,8 @@
     <title>New Blog</title>
 </head>
 <body>
-    <h1>Compose a New Blog for <%= user.displayName %></h1>
+    <%- include('../partials/header') %>
+    <h2>Compose a New Blog for <%= user.displayName %></h1>
     <form action="/users/<%= user._id %>/blog" method="POST">
         
         <label for="title">Title: </label>
