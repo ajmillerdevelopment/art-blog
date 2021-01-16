@@ -10,7 +10,12 @@
     <p>Username: <%= user.username %></p>
     <a href="./<%= user._id %>/edit">Edit</a>
     <a href="/">Home</a>
-
+    <ul>
+    <% user.posts.forEach((post) => { %> 
+        <li><%= post.title %></li>
+        <p><%= post.body %></p>
+    <% }) %> 
+    </ul>
     <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
 
     <form action="./<%= user._id %>/?_method=DELETE" method="POST">
