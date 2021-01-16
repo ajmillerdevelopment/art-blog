@@ -1,0 +1,18 @@
+main {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    flex-direction: row;
+    align-items: stretch;
+}
+.box {
+    background: rgba(255,255,255,0.5);
+    margin: 20px;
+    border-radius: 20px;
+}
+.gallery {
+    flex-grow: 3;
+}
+.hero {
+    flex-grow: 2;
+}

@@ -8,6 +8,7 @@ const User = require('./models/User.js')
 const userController = require('./controllers/user-controller.js')
 const blogController = require('./controllers/blog-controller.js')
 
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(methodOverride('_method'))
 

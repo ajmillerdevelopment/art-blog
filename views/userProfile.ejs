@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./partials/head') %> 
     <title>User Profile</title>
 </head>
 <body>
     <p><%= user.displayName %></p>
     <p>Username: <%= user.username %></p>
-    <a href="./<%= user._id %>/edit">Edit</a>
+    <a href="./<%= user._id %>/edit">Edit Profile</a>
     <a href="/">Home</a>
-    <ul>
-    <% user.posts.forEach((post) => { %> 
-        <li><%= post.title %></li>
-        <p><%= post.body %></p>
-    <% }) %> 
-    </ul>
     <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
 
     <form action="./<%= user._id %>/?_method=DELETE" method="POST">
         <button type="submit">Delete Profile?</button>
     </form>
 
+    <% for (let i = 0; i < user.posts.length; i++) { %>
+        <article>
+            <h3><%= user.posts[i].title %></h3>
+            <p><%= user.posts[i].body %></p>
+            <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
+            <a href="/blog/<%= user.posts[i].id %>/edit"><button>Edit Post</button></a>
+            <form action="../blog/<%= user.posts[i]._id %>/?_method=DELETE" method="POST">
+                <button type="submit">Delete Post?</button>
+            </form>
+        </article>
+    <% } %>
 </body>
 </html>

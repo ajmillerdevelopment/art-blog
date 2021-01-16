@@ -20,6 +20,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
+
 router.get('/:id/edit', (req, res) => {
     db.User.findById(req.params.id, (err, foundUser) => {
         res.render('userUpdate.ejs', {user: foundUser})
@@ -55,6 +56,18 @@ router.post('/:id/blog', (req, res) => {
             if (err) throw err
             res.redirect(`/users/${authorID}`)
         })
+    })
+})
+
+
+router.delete('/:id', (req, res) => {
+    db.User.findByIdAndDelete(req.params.id, (err, deletedUser) => {
+        if (err) {
+            console.log(err);
+            return res.send(err);
+        };
+        res.redirect('/');
+        console.log('Deleted user: ', deletedUser);
     })
 })
 
