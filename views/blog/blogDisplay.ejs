@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %> 
+    <title><%= post.title %></title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <h3><%= post.title %></h1>
+        <h5>By <%= post.author.displayName %></h5> 
+        <article>
+            <p><%= post.body %></p>
+            <h6><%= post.updatedAt %></h6>
+        </article>
+
+    </main>
+    
+
+
+</body>
+</html>

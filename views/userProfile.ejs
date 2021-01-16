@@ -5,8 +5,7 @@
     <title>User Profile</title>
 </head>
 <body>
-    <p><%= user.displayName %></p>
-    <p>Username: <%= user.username %></p>
+    <h1><%= user.displayName %></h1>
     <a href="./<%= user._id %>/edit">Edit Profile</a>
     <a href="/">Home</a>
     <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
@@ -17,7 +16,7 @@
     <% user.posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
     <% for (let i = 0; i < user.posts.length; i++) { %>
         <article>
-            <h3><%= user.posts[i].title %></h3>
+            <h3><a href="/blog/<%= user.posts[i]._id %>"><%= user.posts[i].title %></a></h3>
             <p><%= user.posts[i].body %></p>
             <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
             <a href="/blog/<%= user.posts[i].id %>/edit"><button>Edit Post</button></a>
