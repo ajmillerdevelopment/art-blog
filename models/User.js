@@ -7,7 +7,7 @@ const userSchema = new Schema({
     // password: {type: String, required: true},
     displayName: {type: String, required: true},
     posts: [{type: Schema.Types.ObjectId,
-        ref: 'Posts'}],
+         ref: 'Post'}],
     // isLoggedIn: {type: Boolean, default: false}
 });
 
