@@ -21,6 +21,9 @@
             <p><%= user.posts[i].body %></p>
             <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
             <a href="/blog/<%= user.posts[i].id %>/edit"><button>Edit Post</button></a>
+            <form action="../blog/<%= user.posts[i]._id %>/?_method=DELETE" method="POST">
+                <button type="submit">Delete Post?</button>
+            </form>
         </article>
     <% } %>
 </body>

@@ -44,4 +44,12 @@ router.put('/:postId', (req, res) => {
     })
 })
 
+router.delete('/:postId', (req, res) => {
+    db.Post.findByIdAndDelete(req.params.postId, (err, deletedPost) => {
+        if (err) throw err
+        res.redirect(`/users/${deletedPost.author}`);
+        console.log('Deleted post: ', deletedPost);
+    })
+})
+
 module.exports = router;
