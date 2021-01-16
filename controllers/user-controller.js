@@ -56,11 +56,6 @@ router.post('/:id/blog', (req, res) => {
             if (err) throw err
             res.redirect(`/users/${authorID}`)
         })
-        db.User.findByIdAndUpdate(authorID, {$push: {posts: createdPost._id}}, (err, updatedUser) => {
-            if (err) throw err;
-            console.log(updatedUser)
-
-        })
     })
 })
 
