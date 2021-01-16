@@ -8,7 +8,7 @@
 <body>
     <p><%= user.displayName %></p>
     <p>Username: <%= user.username %></p>
-    <a href="./<%= user._id %>/edit">Edit</a>
+    <a href="./<%= user._id %>/edit">Edit Profile</a>
     <a href="/">Home</a>
 
     <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
@@ -17,5 +17,12 @@
         <button type="submit">Delete Profile?</button>
     </form>
 
+    <% for (let i = 0; i < posts.length; i++) { %>
+        <article>
+            <h3><%= posts[i].title %></h3>
+            <p><%= posts[i].body %></p>
+            <h6>Post Last Edited At: <%= posts[i].updatedAt %></h6>
+        </article>
+    <% } %>
 </body>
 </html>

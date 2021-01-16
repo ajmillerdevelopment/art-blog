@@ -9,20 +9,33 @@ router.get('/new', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
+    let postsArray = [];
     const userId = req.params.id;
     db.User.findById(userId, (err, foundUser) => {
         if (err) {
             console.log(err);
             return res.send(err);
         };
+        for (let i = 0; i < foundUser.posts.length; i++) {
+            db.Post.findById(foundUser.posts[i], (err, foundPost) => {
+                postsArray.push(foundPost);
+                if (i === foundUser.posts.length - 1) {
+                
+                const context = {
+                    user: foundUser,
+                    posts: postsArray
+                };
+                res.render('userProfile.ejs', context); 
+                }
+            })
+            
+        }
+        
+        
+        
+    }  
+)});
 
-        const context = {
-            user: foundUser
-        };
-
-        res.render('userProfile.ejs', context);
-    })
-})
 
 router.get('/:id/edit', (req, res) => {
     db.User.findById(req.params.id, (err, foundUser) => {
@@ -57,6 +70,11 @@ router.post('/:id/blog', (req, res) => {
         db.Post.findByIdAndUpdate(createdPost._id, {author: authorID}, (err, foundAuthor) => {
             if (err) throw err
             res.redirect(`/users/${authorID}`)
+        })
+        db.User.findByIdAndUpdate(authorID, {$push: {posts: createdPost._id}}, (err, updatedUser) => {
+            if (err) throw err;
+            console.log(updatedUser)
+
         })
     })
 })
