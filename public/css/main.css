@@ -2,7 +2,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 body {
-    background: url('/images/MR_COVER_1.png');
+    background: url('https://i.imgur.com/NHCz6NH.png');
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,12 +12,19 @@ body {
     text-shadow: 1px 1px grey;
 }
 h1 {
-    
+    text-decoration: none;
+    color: white;
     text-shadow: 2px 2px gray;
     font-size: 56px;
     font-style: italic;
     margin: 20px 0 0;
 }
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
 nav {
     width: 80%;
 }
@@ -27,8 +34,7 @@ ul {
     flex-direction: row;
     justify-content: space-evenly;
 }
+
 .navitem a {
-    text-decoration: none;
     text-transform: uppercase;
-    color: white;
 }
