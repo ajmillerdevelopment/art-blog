@@ -52,4 +52,14 @@ router.delete('/:postId', (req, res) => {
     })
 })
 
+router.get('/collab', (req, res) => {
+    db.Post.find({}, (err, foundPosts) => {
+        if (err) throw err;
+        const context = {
+            posts: foundPosts
+        };
+        res.render('blog/collabBlog', context)
+    })
+})
+
 module.exports = router;
