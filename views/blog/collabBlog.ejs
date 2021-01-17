@@ -15,6 +15,7 @@
                 <% if (posts[i].crosspost) { %>
                     <h3><%= posts[i].title %></h3>
                     <p><%= posts[i].body %></p>
+                    <img src="<%= posts[i].images[0] %> " alt="<%= posts[i].captions[0] %> ">
                     <br />
                     <p><%= posts[i].updatedAt %></p>
                 <% } %>

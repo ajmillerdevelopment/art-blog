@@ -18,6 +18,7 @@
         <article>
             <h3><a href="/blog/<%= user.posts[i]._id %>"><%= user.posts[i].title %></a></h3>
             <p><%= user.posts[i].body %></p>
+            <img src="<%= user.posts[i].images[0] %>" alt="<%= user.posts[i].captions[0] %>" srcset="">
             <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
             <a href="/blog/<%= user.posts[i].id %>/edit"><button>Edit Post</button></a>
             <form action="../blog/<%= user.posts[i]._id %>/?_method=DELETE" method="POST">
