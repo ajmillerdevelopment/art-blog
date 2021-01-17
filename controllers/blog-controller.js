@@ -65,7 +65,6 @@ router.get('/collab', (req, res) => {
         res.render('blog/collabBlog', context)
     })
 })
-
 router.get('/:postId', (req, res) => {
     const postId = req.params.postId;
     db.Post.findById(postId, (err, foundPost) => {
@@ -77,5 +76,4 @@ router.get('/:postId', (req, res) => {
         res.render('blog/blogDisplay', context)
     })
 })
-
 module.exports = router;
