@@ -2,17 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 
-router.get('/:postId', (req, res) => {
-    const postId = req.params.postId;
-    db.Post.findById(postId, (err, foundPost) => {
-        if (err) throw err;
-        console.log(foundPost)
-        const context = {
-            post: foundPost
-        };
-        res.render('blog/blogDisplay', context)
-    })
-})
+
 
 // Handles user creating a new blog post, renders new blog page
 router.get('/:userId/new', (req, res) => {
@@ -73,6 +63,18 @@ router.get('/collab', (req, res) => {
             posts: foundPosts
         };
         res.render('blog/collabBlog', context)
+    })
+})
+
+router.get('/:postId', (req, res) => {
+    const postId = req.params.postId;
+    db.Post.findById(postId, (err, foundPost) => {
+        if (err) throw err;
+        console.log(foundPost)
+        const context = {
+            post: foundPost
+        };
+        res.render('blog/blogDisplay', context)
     })
 })
 
