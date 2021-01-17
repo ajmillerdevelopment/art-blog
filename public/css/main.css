@@ -9,7 +9,6 @@ body {
     margin: 0;
     height: 100vh;
     color: white;
-    text-shadow: 1px 1px grey;
 }
 h1 {
     text-decoration: none;
@@ -19,12 +18,11 @@ h1 {
     font-style: italic;
     margin: 20px 0 0;
 }
-
 a {
     text-decoration: none;
-    color: white;
+    color: maroon;
+    text-shadow: 1px 1px grey;
 }
-
 nav {
     width: 80%;
 }
@@ -34,7 +32,28 @@ ul {
     flex-direction: row;
     justify-content: space-evenly;
 }
-
 .navitem a {
     text-transform: uppercase;
 }
+.box {
+    background: rgba(255,255,255,0.5);
+    margin: 20px;
+    border-radius: 20px;
+}
+article p {
+    color: purple;
+}
+button {
+    background-color: pink;
+    border: none;
+    color: maroon;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 2px solid maroon;
+    cursor: pointer;
+  }
