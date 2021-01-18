@@ -55,16 +55,19 @@ router.delete('/:postId', (req, res) => {
 })
 
 router.get('/collab', (req, res) => {
-    db.Post.find({}, (err, foundPosts) => {
+    db.Post.find({crosspost: true}).populate('author', 'displayName').exec((err, foundPosts) => {
         if (err) throw err;
         foundPosts.sort((a, b) => {a.updatedAt - b.updatedAt})
-        console.log(foundPosts)
+        // console.log(foundPosts)
+        
         const context = {
             posts: foundPosts
         };
         res.render('blog/collabBlog', context)
     })
 })
+
+
 router.get('/:postId', (req, res) => {
     const postId = req.params.postId;
     db.Post.findById(postId, (err, foundPost) => {
