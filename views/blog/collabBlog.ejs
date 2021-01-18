@@ -2,27 +2,23 @@
 <html lang="en">
 <head>
     <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/profile.css">
     <title>Collab Blog</title>
 </head>
 <body>
     <%- include('../partials/header') %>
-    <main>
         <h1>Collaborative Blog</h1>
-
-        <div>
             <% posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
             <% for (let i = 0; i < posts.length; i++) { %>
                 <% if (posts[i].crosspost) { %>
-                    <h3><%= posts[i].title %></h3>
-                    <p><%= posts[i].author.displayName %></p>
-                    <p><%= posts[i].body %></p>
-                    <img src="<%= posts[i].images[0] %> " alt="<%= posts[i].captions[0] %> ">
-                    <br />
-                    <p><%= posts[i].updatedAt %></p>
+                    <article class="box">
+                    <h3><a href="/blog/<%= posts[i]._id %> "><%= posts[i].title %></a></h3>
+                    <!-- <h4>By: <#%= posts[i].users.displayName %> </h4> -->
+                    <div class="text-preview">
+                    <p><%= posts[i].body %></p></div>
+                    <h6><%= posts[i].updatedAt %></h6>
+                    </article>
                 <% } %>
              <% } %>
-        </div>
-        
-    </main>
 </body>
 </html>

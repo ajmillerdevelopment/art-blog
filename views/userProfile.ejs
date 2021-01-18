@@ -18,7 +18,7 @@
             <!-- Images disabled on profile page -->
             <!-- <img src="<#%= user.posts[i].images[0] %>" alt="<#%= user.posts[i].captions[0] %>" srcset=""> -->
             <div class="article-buttons">
-            
+    
             <a href="/blog/<%= user.posts[i].id %>/edit"><button>Edit Post</button></a>
             <form action="../blog/<%= user.posts[i]._id %>/?_method=DELETE" method="POST">
                 <button type="submit">Delete Post?</button>
