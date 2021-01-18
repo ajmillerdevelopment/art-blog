@@ -1,6 +1,6 @@
 article{ 
     max-height: 150px;
-    max-width: 60%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
