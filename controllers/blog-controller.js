@@ -61,22 +61,27 @@ router.get('/gallery', (req, res) => {
         console.log(foundPosts);
         for (let i = 0; i < foundPosts.length; i++) {
             if (foundPosts[i].images.length > 0) {
-               for (let ii = 0; ii < foundPosts[i].images.length; ii++) {
-                    let imgObject = {};
-                    imgObject.image = foundPosts[i].images[ii];
-                    imgObject.caption = foundPosts[i].captions[ii];
-                    imgObject.author = foundPosts[i].author;
-                    imgObject.updatedAt = foundPosts[i].updatedAt[ii];
-                    imagesArray.push(imgObject);
+                let imgObject = {}; 
+                let imgObjectImages = [];
+                let imgObjectCaptions = [];
+                imgObject.author = foundPosts[i].author;
+                imgObject.updatedAt = foundPosts[i].updatedAt;
+                imgObject._id = foundPosts[i]._id;
+                for (let ii = 0; ii < foundPosts[i].images.length; ii++) {
+                    imgObjectImages.push(foundPosts[i].images[ii]);
+                    imgObjectCaptions.push(foundPosts[i].captions[ii]);
                 } 
+                imgObject.images = imgObjectImages
+                imgObject.captions = imgObjectCaptions;
                 console.log(foundPosts[i].images);
+                imagesArray.push(imgObject);
             }
             
         };
+        imagesArray.sort((a, b) => (b.updatedAt - a.updatedAt))
         const context = {
             posts: imagesArray
         };
-        console.log(imagesArray);
         res.render('blog/gallery', context)
     })
 })
