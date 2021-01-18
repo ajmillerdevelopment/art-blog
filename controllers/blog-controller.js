@@ -97,7 +97,7 @@ router.get('/collab', (req, res) => {
 
 router.get('/:postId', (req, res) => {
     const postId = req.params.postId;
-    db.Post.findById(postId, (err, foundPost) => {
+    db.Post.findById(postId).populate('author').exec((err, foundPost) => {
         if (err) throw err;
         console.log(foundPost)
         const context = {
