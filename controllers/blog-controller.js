@@ -54,6 +54,33 @@ router.delete('/:postId', (req, res) => {
     })
 })
 
+router.get('/gallery', (req, res) => {
+    db.Post.find({images: {$exists: true}}, (err, foundPosts) => {
+        if (err) throw err;
+        const imagesArray = [];
+        console.log(foundPosts);
+        for (let i = 0; i < foundPosts.length; i++) {
+            if (foundPosts[i].images.length > 0) {
+               for (let ii = 0; ii < foundPosts[i].images.length; ii++) {
+                    let imgObject = {};
+                    imgObject.image = foundPosts[i].images[ii];
+                    imgObject.caption = foundPosts[i].captions[ii];
+                    imgObject.author = foundPosts[i].author;
+                    imgObject.updatedAt = foundPosts[i].updatedAt[ii];
+                    imagesArray.push(imgObject);
+                } 
+                console.log(foundPosts[i].images);
+            }
+            
+        };
+        const context = {
+            posts: imagesArray
+        };
+        console.log(imagesArray);
+        res.render('blog/gallery', context)
+    })
+})
+
 router.get('/collab', (req, res) => {
     db.Post.find({crosspost: true}).populate('author', 'displayName').exec((err, foundPosts) => {
         if (err) throw err;

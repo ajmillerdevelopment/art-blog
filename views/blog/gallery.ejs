@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %> 
+    <title>Galler</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <main>
+        <h1>Gallery</h1>
+        <div class="gallery">
+            <% for (let i = 0; i < posts.length; i++) { %>
+                <img src="<%= posts[i].image %>" alt="<%= posts[i].caption %>">
+            <% } %>
+        </div>
+    </main>
+    
+    
+
+</body>
+</html>
