@@ -13,7 +13,7 @@
                 <% if (posts[i].crosspost) { %>
                     <article class="box">
                     <h3><a href="/blog/<%= posts[i]._id %> "><%= posts[i].title %></a></h3>
-                    <h4>By: <%= posts[i].author.displayName %> </h4>
+                    <h6>By: <%= posts[i].author.displayName %> </h6>
                     <div class="text-preview">
                     <p><%= posts[i].body %></p></div>
                     <h6><%= posts[i].updatedAt %></h6>
