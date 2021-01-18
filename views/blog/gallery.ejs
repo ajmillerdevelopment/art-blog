@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <%- include('../partials/head') %> 
-    <title>Galler</title>
+    <title>Gallery</title>
 </head>
 <body>
     <%- include('../partials/header') %>
@@ -10,7 +10,13 @@
         <h1>Gallery</h1>
         <div class="gallery">
             <% for (let i = 0; i < posts.length; i++) { %>
-                <img src="<%= posts[i].image %>" alt="<%= posts[i].caption %>">
+                <div>
+                    <p><a href="/users/<%= posts[i].author %>">Original Post</a></p>
+                    <% for (let j = 0; j < posts[i].images.length; j++) { %>
+                        <img src="<%= posts[i].images[j] %>" alt="<%= posts[i].captions[j] %>"> 
+                    <% } %>
+                    
+                </div>
             <% } %>
         </div>
     </main>
