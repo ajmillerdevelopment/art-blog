@@ -3,9 +3,8 @@
         <% for (let user of users) { %> 
             <li class="navitem"><a href="/users/<%= user._id %>"><%= user.displayName %> </a></li>
         <% } %> 
-        <li class="navitem"><a href="">Collab Blog</a></li>
-        <li class="navitem"><a href="">Gallery</a></li>
+        <li class="navitem"><a href="/blog/collab">Collab Blog</a></li>
+        <li class="navitem"><a href="/blog/gallery">Gallery</a></li>
         <li class="navitem"><a href="">Contact</a></li>
-        <li class="navitem"><a href="/users/new">DEV: New User</a></li>
     </ul>
 </nav>

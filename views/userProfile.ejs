@@ -2,29 +2,32 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %> 
+    <link rel="stylesheet" href="/css/profile.css">
     <title>User Profile</title>
 </head>
 <body>
-    <p><%= user.displayName %></p>
-    <p>Username: <%= user.username %></p>
-    <a href="./<%= user._id %>/edit">Edit Profile</a>
-    <a href="/">Home</a>
-    <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
-
-    <form action="./<%= user._id %>/?_method=DELETE" method="POST">
-        <button type="submit">Delete Profile?</button>
-    </form>
-
+    <%- include('./partials/header') %> 
+    <h1><%= user.displayName %></h1>
+    <% user.posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
     <% for (let i = 0; i < user.posts.length; i++) { %>
-        <article>
-            <h3><%= user.posts[i].title %></h3>
+        <article class="box">
+            <h3><a href="/blog/<%= user.posts[i]._id %>"><%= user.posts[i].title %></a></h3>
+            <div class="text-preview">
             <p><%= user.posts[i].body %></p>
-            <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
+            </div>
+            <!-- Images disabled on profile page -->
+            <!-- <img src="<#%= user.posts[i].images[0] %>" alt="<#%= user.posts[i].captions[0] %>" srcset=""> -->
+            <div class="article-buttons">
+    
             <a href="/blog/<%= user.posts[i].id %>/edit"><button>Edit Post</button></a>
             <form action="../blog/<%= user.posts[i]._id %>/?_method=DELETE" method="POST">
                 <button type="submit">Delete Post?</button>
             </form>
+            <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
+            </div>
         </article>
-    <% } %>
+    <% } %>   
+    <a href="./<%= user._id %>/edit"> <button>Edit Profile</button> </a>
+    <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
 </body>
 </html>

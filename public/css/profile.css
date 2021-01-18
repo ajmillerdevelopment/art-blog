@@ -1,0 +1,27 @@
+article{ 
+    max-height: 150px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+h3 {
+    margin: 10px 10px;
+}
+.text-preview {
+    overflow: hidden;
+    height: 20px;
+    max-width: 100%;
+    margin: 0 10px;
+}
+.text-preview p {
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    display: inline;
+}
+.article-buttons {
+    margin: 10px;
+}
+.article-buttons * {
+    display: inline;
+}

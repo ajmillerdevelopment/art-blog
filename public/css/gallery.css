@@ -1,0 +1,13 @@
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.gallery a img {
+    max-width: 300px;
+    max-width: 300px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 2px solid white
+}

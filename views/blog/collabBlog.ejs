@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/profile.css">
+    <title>Collab Blog</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+        <h1>Collaborative Blog</h1>
+            <% posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
+            <% for (let i = 0; i < posts.length; i++) { %>
+                <% if (posts[i].crosspost) { %>
+                    <article class="box">
+                    <h3><a href="/blog/<%= posts[i]._id %> "><%= posts[i].title %></a></h3>
+                    <h6>By: <%= posts[i].author.displayName %> </h6>
+                    <div class="text-preview">
+                    <p><%= posts[i].body %></p></div>
+                    <h6><%= posts[i].updatedAt %></h6>
+                    </article>
+                <% } %>
+             <% } %>
+</body>
+</html>

@@ -4,9 +4,10 @@ const Schema = mongoose.Schema
 const postSchema = new Schema({
     title: {type: String, required:true},
     body: String,
-    author: {type: Schema.Types.ObjectId, ref: 'Author'},
+    author: {type: Schema.Types.ObjectId, ref: 'User'},
     crosspost: Boolean,
-    images: Array
+    images: [String],
+    captions: [String]
 }, {timestamps: true} );
 
 const Post = mongoose.model('Post', postSchema);
