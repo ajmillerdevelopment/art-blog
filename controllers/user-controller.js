@@ -6,38 +6,11 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 
-const initializePassport = require('../passport-config');
-const { resolveInclude } = require('ejs');
 
-initializePassport(
-    passport,
-    (param) => {
-        console.log(param);
-        return new Promise((res, rej) => {
-           db.User.findOne({username: param}, (err, foundUser) => {
-                if (err) rej(err);
-                console.log(foundUser);
-                // if (!foundUser) {
-                //     console.log('no user found')
-                // }
-                // console.log(foundUser);
-                res(foundUser)}); 
-        })
-    },
-    (id) => {
-        return new Promise((res, rej) => {
-            db.User.find({_id: `${id}`}, (err, foundUser) => {
-                if (err) rej(err);
-                res(foundUser);
-            }) 
-        })
-        
-    }
-)
+const { resolveInclude } = require('ejs');
 
 router.use(flash());
 router.use(session({
@@ -46,40 +19,22 @@ router.use(session({
     saveUninitialized: false
 }));
 
-router.use(passport.initialize());
-router.use(passport.session());
-
-function checkAuthent(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    }
-    res.redirect('/users/login');
-}
-
-function checkNotAuthent(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/');
-    }
-    next();
-}
-
 
 // Adds route for user profile at id
-router.get('/new', checkNotAuthent, (req, res) => {
+router.get('/new', (req, res) => {
     res.render('userNew');
 });
 
-router.get('/login', checkNotAuthent, (req, res) => {
+router.get('/login', (req, res) => {
     res.render('logIn');
 })
 
-router.delete('/logout', checkAuthent, (req, res) => {
-    req.logOut();
+router.delete('/logout', (req, res) => {
     res.redirect('/users/login');
 })
 // Some of my code here was modeled off of the following website: https://www.youtube.com/watch?v=-RCnNyD0L-s
 
-router.post('/new', checkNotAuthent, async (req, res) => {
+router.post('/new', (req, res) => {
     try {
         const newUser = {}
         const hashPass = await bcrypt.hash(req.body.password, 10);

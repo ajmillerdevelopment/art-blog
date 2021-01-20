@@ -6,8 +6,7 @@ const postSchema = new Schema({
     body: String,
     author: {type: Schema.Types.ObjectId, ref: 'User'},
     crosspost: Boolean,
-    images: [String],
-    captions: [String]
+    images: [{type: Schema.Types.ObjectId, ref: 'Image'}],
 }, {timestamps: true} );
 
 const Post = mongoose.model('Post', postSchema);

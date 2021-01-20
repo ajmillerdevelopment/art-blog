@@ -67,36 +67,15 @@ router.delete('/:postId', (req, res) => {
 })
 
 router.get('/gallery', (req, res) => {
-    db.Post.find({images: {$exists: true}}, (err, foundPosts) => {
-        if (err) throw err;
-        const imagesArray = [];
-        console.log(foundPosts);
-        for (let i = 0; i < foundPosts.length; i++) {
-            if (foundPosts[i].images.length > 0) {
-                let imgObject = {}; 
-                let imgObjectImages = [];
-                let imgObjectCaptions = [];
-                imgObject.author = foundPosts[i].author;
-                imgObject.updatedAt = foundPosts[i].updatedAt;
-                imgObject._id = foundPosts[i]._id;
-                for (let ii = 0; ii < foundPosts[i].images.length; ii++) {
-                    imgObjectImages.push(foundPosts[i].images[ii]);
-                    imgObjectCaptions.push(foundPosts[i].captions[ii]);
-                } 
-                imgObject.images = imgObjectImages
-                imgObject.captions = imgObjectCaptions;
-                console.log(foundPosts[i].images);
-                imagesArray.push(imgObject);
-            }
-            
-        };
-        imagesArray.sort((a, b) => (b.updatedAt - a.updatedAt))
+    db.Image.find({}, (err, foundImages) => {
+        if (err) throw err
         const context = {
-            posts: imagesArray
-        };
+            images: foundImages
+        }
         res.render('blog/gallery', context)
-    })
+    })   
 })
+
 
 router.get('/collab', (req, res) => {
     db.Post.find({crosspost: true}).populate('author', 'displayName').exec((err, foundPosts) => {
@@ -114,7 +93,7 @@ router.get('/collab', (req, res) => {
 
 router.get('/:postId', (req, res) => {
     const postId = req.params.postId;
-    db.Post.findById(postId).populate('author').exec((err, foundPost) => {
+    db.Post.findById(postId).populate('author').populate('images').exec((err, foundPost) => {
         if (err) throw err;
         console.log(foundPost)
         const context = {
