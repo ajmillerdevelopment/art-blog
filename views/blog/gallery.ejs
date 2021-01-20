@@ -9,12 +9,9 @@
     <%- include('../partials/header') %>
 
         <h1>Gallery</h1>
-        <div class="gallery">
-            <% for (let i = 0; i < posts.length; i++) { %>
-                    <% for (let j = 0; j < posts[i].images.length; j++) { %>
-                        <a href="/users/<%= posts[i].author %>"><img src="<%= posts[i].images[j] %>" alt="<%= posts[i].captions[j] %>"></a> 
-                    <% } %>
-            <% } %>
-        </div>
+    <div class="gallery">
+    <% for (let image of images) { %>
+        <img src="<%= image.url %>" alt="">
+  <%  } %> </div>
 </body>
 </html>
