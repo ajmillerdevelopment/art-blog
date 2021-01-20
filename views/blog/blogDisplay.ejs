@@ -12,8 +12,9 @@
         <h6><%= post.updatedAt %></h6>
         <article class="box">
             <p><%= post.body %></p>
-            
-            <img src="<%= post.images[0] %> " alt="<%= post.captions[0] %> ">
+            <% for (let image of post.images) { %>
+                <img src="<%= image.url %> " alt="">
+          <% } %> 
         </article>
 </body>
 </html>

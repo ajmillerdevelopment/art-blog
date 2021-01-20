@@ -1,6 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+const multer = require('multer')
+
+//for multer, sets storage directory and filename
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './public/images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+})
+const upload = multer({storage: storage})
 
 // Adds route for user profile at id
 router.get('/new', (req, res) => {
@@ -46,11 +58,19 @@ router.post('/', (req, res) => {
     })
 })
 
-router.post('/:id/blog', (req, res) => {
+router.post('/:id/blog', upload.array('images'), (req, res) => {
     const authorID = req.params.id
     db.Post.create(req.body, (err, createdPost) => {
         if (err) throw err 
         console.log(createdPost)
+        for (let file of req.files) {
+            db.Image.create({name: file.originalname, url: '/images/' + file.filename, post: createdPost._id}, (err, createdImage) => {
+                if (err) throw err
+                console.log(createdImage)
+                db.Post.findByIdAndUpdate(createdPost._id, {$push: {images: createdImage._id}}, {new: true}, (err, updatedpost) => {if (err) throw err})
+                
+            })
+        }
         db.User.findByIdAndUpdate(authorID, {$push: {posts: createdPost._id}}, {new: true}, (err, updatedUser) => {if(err){console.log(err)}})
         db.Post.findByIdAndUpdate(createdPost._id, {author: authorID}, (err, foundAuthor) => {
             if (err) throw err

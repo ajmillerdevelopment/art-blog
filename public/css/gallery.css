@@ -3,8 +3,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    width: 80%;
 }
-.gallery a img {
+.gallery img {
     max-width: 300px;
     max-width: 300px;
     margin: 10px;
