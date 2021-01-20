@@ -10,24 +10,28 @@ const db = require('./models');
 
 function initialize(passport, findUserByUsername, findUserById) {
     const authenticateUser = async (username, password, done) => {
-        const foundUser = await findUserByUsername(username) 
-        // console.log(foundUser);
+        console.log(username);
+        findUserByUsername(username).then((foundUser) => {
+            console.log(foundUser);
             try {
-                await bcrypt.compare(password, foundUser.password, (err, res) => {
+                bcrypt.compare(password, foundUser.password, (err, res) => {
                     if (err) throw err;
                     if (res) {
                         console.log('found user successfully')
                         return done(null, foundUser);
                     } else {
-                       console.log('credentials didnt match')
-                        return done(null, false, {message: 'User Credentials Did Not Match'}) 
+                        console.log('credentials didnt match')
+                        return done(null, false, {message: 'User Credentials Did Not Match'})
                     }
-            })} catch (err) {
+            })}
+            catch (err) {
                 return done(err);
-            } 
+            }
+        })
         };   
     passport.use(new LocalStrategy({
-        usernameField: 'username'
+        usernameField: 'username',
+        passwordField: 'password'
     },
     authenticateUser));
     passport.serializeUser((user, done) => done(null, user._id));

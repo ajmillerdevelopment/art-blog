@@ -2,7 +2,19 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 
+function checkAuthent(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+    res.redirect('/users/login');
+}
 
+function checkNotAuthent(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/');
+    }
+    next();
+}
 
 // Handles user creating a new blog post, renders new blog page
 router.get('/:userId/new', (req, res) => {

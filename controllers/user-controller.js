@@ -15,19 +15,27 @@ const { resolveInclude } = require('ejs');
 
 initializePassport(
     passport,
-    (username) => {
+    (param) => {
+        console.log(param);
         return new Promise((res, rej) => {
-           db.User.findOne({username: `${username}`}, (err, foundUser) => {
+           db.User.findOne({username: param}, (err, foundUser) => {
                 if (err) rej(err);
+                console.log(foundUser);
+                // if (!foundUser) {
+                //     console.log('no user found')
+                // }
                 // console.log(foundUser);
                 res(foundUser)}); 
         })
     },
-    async (id) => {
-        db.User.find({_id: `${id}`}, (err, foundUser) => {
-            if (err) throw err;
-            return foundUser;
+    (id) => {
+        return new Promise((res, rej) => {
+            db.User.find({_id: `${id}`}, (err, foundUser) => {
+                if (err) rej(err);
+                res(foundUser);
+            }) 
         })
+        
     }
 )
 
@@ -92,6 +100,27 @@ router.post('/new', checkNotAuthent, async (req, res) => {
     };
 });
 
+router.put('/:id', (req, res) => {
+    console.log(req.body.password);
+    bcrypt.hash(req.body.password, 10).then((hash) => {
+        console.log(hash);
+       
+        db.User.findByIdAndUpdate(
+            req.params.id,
+            {
+                username: `${req.body.username}`,
+                displayName: `${req.body.displayName}`,
+                email: `${req.body.email}`,
+                password: `${hash}`
+            }, 
+            (err, foundUser) => {
+                console.log(foundUser);
+                req.logOut();
+                res.redirect('/users/login');
+            })
+    })
+})
+
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login',
@@ -120,9 +149,7 @@ router.get('/:id/edit', checkAuthent, (req, res) => {
     console.log(req.isAuthenticated);
 })
 
-router.put('/:id', (req, res) => {
-    db.User.findByIdAndUpdate(req.params.id, req.body, () => res.redirect('/'))
-})
+
 
 
 router.post('/:id/blog', (req, res) => {
