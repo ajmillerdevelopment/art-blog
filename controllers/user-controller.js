@@ -45,7 +45,7 @@ function checkAuthent(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     }
-    res.redirect('/login');
+    res.redirect('/users/login');
 }
 
 function checkNotAuthent(req, res, next) {
@@ -65,9 +65,9 @@ router.get('/login', checkNotAuthent, (req, res) => {
     res.render('logIn');
 })
 
-router.delete('/logout', (req, res) => {
+router.delete('/logout', checkAuthent, (req, res) => {
     req.logOut();
-    res.redirect('/login');
+    res.redirect('/users/login');
 })
 // Some of my code here was modeled off of the following website: https://www.youtube.com/watch?v=-RCnNyD0L-s
 
@@ -113,10 +113,11 @@ router.get('/:id', (req, res) => {
 })
 
 
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', checkAuthent, (req, res) => {
     db.User.findById(req.params.id, (err, foundUser) => {
         res.render('userUpdate.ejs', {user: foundUser})
     })
+    console.log(req.isAuthenticated);
 })
 
 router.put('/:id', (req, res) => {
@@ -138,7 +139,7 @@ router.post('/:id/blog', (req, res) => {
 })
 
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id/', (req, res) => {
     db.User.findByIdAndDelete(req.params.id, (err, deletedUser) => {
         if (err) {
             console.log(err);

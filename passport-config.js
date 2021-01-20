@@ -11,7 +11,7 @@ const db = require('./models');
 function initialize(passport, findUserByUsername, findUserById) {
     const authenticateUser = async (username, password, done) => {
         const foundUser = await findUserByUsername(username) 
-        console.log(foundUser);
+        // console.log(foundUser);
             try {
                 await bcrypt.compare(password, foundUser.password, (err, res) => {
                     if (err) throw err;
