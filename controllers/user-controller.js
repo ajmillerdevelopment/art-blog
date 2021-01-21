@@ -7,41 +7,30 @@ const router = express.Router();
 const db = require('../models');
 const bcrypt = require('bcrypt');
 const flash = require('express-flash');
-const session = require('express-session');
+
 
 
 const { resolveInclude } = require('ejs');
 
 router.use(flash());
-router.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}));
 
 
-// Adds route for user profile at id
+
+// Route for displaying page to create new users
 router.get('/new', (req, res) => {
     res.render('userNew');
 });
 
-router.get('/login', (req, res) => {
-    res.render('logIn');
-})
-
-router.delete('/logout', (req, res) => {
-    res.redirect('/users/login');
-})
-// Some of my code here was modeled off of the following website: https://www.youtube.com/watch?v=-RCnNyD0L-s
+// Route for posting new user data, makes new user with hashed password, 
 
 router.post('/new', (req, res) => {
-    try {
-        const newUser = {}
-        const hashPass = await bcrypt.hash(req.body.password, 10);
-        newUser.username = req.body.username;
-        newUser.displayName = req.body.displayName;
-        newUser.email = req.body.email;
-        newUser.password = hashPass;
+    bcrypt.hash(req.body.password, 15, (err, hashPass) => {
+        const newUser = {
+            username: req.body.username,
+            displayName: req.body.displayName,
+            email: req.body.email,
+            password: hashPass,
+        };
         db.User.create(newUser, (err, createdUser) => {
             if (err) {
                 console.log(err);
@@ -50,15 +39,53 @@ router.post('/new', (req, res) => {
             console.log(createdUser);
             res.redirect('login');
         })
-    } catch {
-        res.redirect('/new');
-    };
+    });  
 });
+
+// Route for rendering login page
+
+router.get('/login', (req, res) => {
+    res.render('logIn');
+})
+
+// Route for handling login requests
+
+router.post('/login', (req, res) => {
+    db.User.findOne({username: req.body.username}, (err, foundUser) => {
+        if (err) throw err;
+        console.log(req.body.password);
+        console.log(foundUser.password);
+        bcrypt.compare(req.body.password, foundUser.password, (err, resolved) => {
+            console.log(req.body.password);
+            console.log(foundUser.password);
+            if (err) throw err;
+            if (resolved) {
+                console.log('found user with matching username and password');
+                // Do stuff here
+                res.redirect(`/users/${foundUser._id}`);
+            } else {
+                console.log('credentials didnt match')
+                res.redirect('/login');
+            }
+        })
+    })
+})
+
+
+
+// Route for logging out
+
+// router.delete('/logout', (req, res) => {
+//     res.redirect('/users/login');
+// })
+
+
+
 
 router.put('/:id', (req, res) => {
     console.log(req.body.password);
-    bcrypt.hash(req.body.password, 10).then((hash) => {
-        console.log(hash);
+    bcrypt.hash(req.body.password, 15, (err, hashPass) => {
+        console.log(hashPass);
        
         db.User.findByIdAndUpdate(
             req.params.id,
@@ -76,11 +103,7 @@ router.put('/:id', (req, res) => {
     })
 })
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login',
-    failureFlash: true,
-}))
+
 
 
 
@@ -97,7 +120,7 @@ router.get('/:id', (req, res) => {
 })
 
 
-router.get('/:id/edit', checkAuthent, (req, res) => {
+router.get('/:id/edit', (req, res) => {
     db.User.findById(req.params.id, (err, foundUser) => {
         res.render('userUpdate.ejs', {user: foundUser})
     })
