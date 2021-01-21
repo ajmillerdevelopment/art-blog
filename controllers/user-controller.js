@@ -83,7 +83,8 @@ router.get('/:id', (req, res) => {
         if (err) throw err
         console.log('foundUser', foundUser)
         const context = {
-            user: foundUser
+            user: foundUser,
+            currentUser: null
         }
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
@@ -100,7 +101,8 @@ router.get('/:id/edit', (req, res) => {
         if (req.session.currentUser._id === req.params.id) {       
         db.User.findById(req.params.id, (err, foundUser) => {
             const context = {
-                user: foundUser
+                user: foundUser,
+                currentUser: null
             };
             if (req.session.currentUser) {
                 context.currentUser = req.session.currentUser;

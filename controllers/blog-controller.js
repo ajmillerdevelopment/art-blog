@@ -16,7 +16,8 @@ router.get('/:userId/new', (req, res) => {
             }
             console.log('Creating new post for:', foundUser.displayName)
             const context = {
-                user: foundUser
+                user: foundUser,
+                currentUser: null
             };
             if (req.session.currentUser) {
                 context.currentUser = req.session.currentUser;
@@ -39,7 +40,8 @@ router.get('/:postId/edit', (req, res) => {
         };
         console.log(foundPost.author);
         const context = {
-            post: foundPost
+            post: foundPost,
+            currentUser: null
         };
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
@@ -73,7 +75,8 @@ router.get('/gallery', (req, res) => {
     db.Image.find({}, (err, foundImages) => {
         if (err) throw err
         const context = {
-            images: foundImages
+            images: foundImages,
+            currentUser: null
         }
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
@@ -90,7 +93,8 @@ router.get('/collab', (req, res) => {
         // console.log(foundPosts)
         
         const context = {
-            posts: foundPosts
+            posts: foundPosts,
+            currentUser: null
         };
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
@@ -106,7 +110,8 @@ router.get('/:postId', (req, res) => {
         if (err) throw err;
         console.log(foundPost)
         const context = {
-            post: foundPost
+            post: foundPost,
+            currentUser: null
         };
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
