@@ -30,7 +30,8 @@ router.use(flash());
 
 // Route for displaying page to create new users
 router.get('/new', (req, res) => {
-    res.render('userNew');
+    const context = {currentUser: null}
+    res.render('userNew', context);
 });
 
 
