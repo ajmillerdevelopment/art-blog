@@ -16,10 +16,12 @@ router.use(flash());
 
 
 
+
 // Route for displaying page to create new users
 router.get('/new', (req, res) => {
     res.render('userNew');
 });
+
 
 // Route for posting new user data, makes new user with hashed password, 
 
@@ -51,17 +53,17 @@ router.get('/login', (req, res) => {
 // Route for handling login requests
 
 router.post('/login', (req, res) => {
-    db.User.findOne({username: req.body.username}, (err, foundUser) => {
+    db.User.findOne({username: {$eq: req.body.username}}, (err, foundUser) => {
         if (err) throw err;
-        console.log(req.body.password);
-        console.log(foundUser.password);
+        if (!foundUser) {
+            console.log('no user with that username found');
+        }
+        console.log(foundUser);
         bcrypt.compare(req.body.password, foundUser.password, (err, resolved) => {
-            console.log(req.body.password);
-            console.log(foundUser.password);
             if (err) throw err;
             if (resolved) {
                 console.log('found user with matching username and password');
-                // Do stuff here
+                req.session.currentUser = foundUser;
                 res.redirect(`/users/${foundUser._id}`);
             } else {
                 console.log('credentials didnt match')
@@ -71,13 +73,6 @@ router.post('/login', (req, res) => {
     })
 })
 
-
-
-// Route for logging out
-
-// router.delete('/logout', (req, res) => {
-//     res.redirect('/users/login');
-// })
 
 
 
@@ -90,21 +85,17 @@ router.put('/:id', (req, res) => {
         db.User.findByIdAndUpdate(
             req.params.id,
             {
-                username: `${req.body.username}`,
-                displayName: `${req.body.displayName}`,
-                email: `${req.body.email}`,
-                password: `${hash}`
+                username: req.body.username,
+                displayName: req.body.displayName,
+                email: req.body.email,
+                password: hashPass
             }, 
             (err, foundUser) => {
                 console.log(foundUser);
-                req.logOut();
-                res.redirect('/users/login');
+                res.redirect('/');
             })
     })
 })
-
-
-
 
 
 router.get('/:id', (req, res) => {

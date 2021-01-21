@@ -27,6 +27,15 @@ app.get('/', (req, res)  => {
     User.find({}, (err, foundUsers) => {
         res.render('home.ejs', {users: foundUsers})
     })
+});
+
+// Route for logging out
+
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) throw err;
+        res.redirect('/');
+    })
 })
 
 app.set('view engine', 'ejs')
