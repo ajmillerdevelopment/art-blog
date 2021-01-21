@@ -3,12 +3,12 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     width: 80%;
 }
 .gallery img {
-    max-width: 300px;
-    max-width: 300px;
     margin: 10px;
     border-radius: 5px;
-    border: 2px solid white
+    border: 2px solid white;
+    flex-grow: 1;
 }
