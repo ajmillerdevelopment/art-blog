@@ -63,12 +63,11 @@ app.get('/contact', (req, res) => {
     db.User.find({}, (err, foundUsers) => {
         if (err) throw err;
         const context = {
-            users: foundUsers
+            users: foundUsers,
+            currentUser: null
         };
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
-        }  else {
-            context.currentUser = null;
         }
         res.render('contact', context);
     })
