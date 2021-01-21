@@ -57,6 +57,10 @@ app.get('/login', (req, res) => {
     res.render('logIn');
 })
 
+app.get('/loginfailed', (req, res) => {
+    res.render('loginfailed')
+})
+
 // Route for handling contact page
 
 app.get('/contact', (req, res) => {
@@ -89,7 +93,7 @@ app.post('/login', (req, res) => {
                 res.redirect(`/users/${foundUser._id}`);
             } else {
                 console.log('credentials didnt match')
-                res.redirect('/login');
+                res.redirect('/loginfailed');
             }
         })
     })
