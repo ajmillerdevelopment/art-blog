@@ -84,6 +84,7 @@ app.post('/login', (req, res) => {
         if (err) throw err;
         if (!foundUser) {
             console.log('no user with that username found');
+            res.redirect('/loginfailed')
         }
         bcrypt.compare(req.body.password, foundUser.password, (err, resolved) => {
             if (err) throw err;
