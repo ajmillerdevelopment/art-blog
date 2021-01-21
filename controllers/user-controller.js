@@ -39,39 +39,14 @@ router.post('/new', (req, res) => {
                 return res.send(err);
             };
             console.log(createdUser);
-            res.redirect('login');
+            res.redirect('/login');
         })
     });  
 });
 
 // Route for rendering login page
 
-router.get('/login', (req, res) => {
-    res.render('logIn');
-})
 
-// Route for handling login requests
-
-router.post('/login', (req, res) => {
-    db.User.findOne({username: {$eq: req.body.username}}, (err, foundUser) => {
-        if (err) throw err;
-        if (!foundUser) {
-            console.log('no user with that username found');
-        }
-        console.log(foundUser);
-        bcrypt.compare(req.body.password, foundUser.password, (err, resolved) => {
-            if (err) throw err;
-            if (resolved) {
-                console.log('found user with matching username and password');
-                req.session.currentUser = foundUser;
-                res.redirect(`/users/${foundUser._id}`);
-            } else {
-                console.log('credentials didnt match')
-                res.redirect('/login');
-            }
-        })
-    })
-})
 
 
 
@@ -112,16 +87,20 @@ router.get('/:id', (req, res) => {
 
 
 router.get('/:id/edit', (req, res) => {
-    db.User.findById(req.params.id, (err, foundUser) => {
-        res.render('userUpdate.ejs', {user: foundUser})
-    })
-    console.log(req.isAuthenticated);
+    if (req.session.currentUser && req.session.currentUser._id === req.params.id) {        
+        db.User.findById(req.params.id, (err, foundUser) => {
+            res.render('userUpdate.ejs', {user: foundUser})
+        })
+    } else {
+        res.redirect(`/users/${req.params.id}`);
+    }
 })
 
 
 
 
 router.post('/:id/blog', (req, res) => {
+    console.log(req.body);
     const authorID = req.params.id
     db.Post.create(req.body, (err, createdPost) => {
         if (err) throw err 
