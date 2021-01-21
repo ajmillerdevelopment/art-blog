@@ -92,6 +92,9 @@ router.get('/:id', (req, res) => {
         const context = {
             user: foundUser
         }
+        if (req.session.currentUser) {
+            context.currentUser = currentUser;
+        }
         res.render('userProfile.ejs', context)
     })
 })
@@ -100,7 +103,13 @@ router.get('/:id', (req, res) => {
 router.get('/:id/edit', (req, res) => {
     if (req.session.currentUser && req.session.currentUser._id === req.params.id) {        
         db.User.findById(req.params.id, (err, foundUser) => {
-            res.render('userUpdate.ejs', {user: foundUser})
+            const context = {
+                user: foundUser
+            };
+            if (req.session.currentUser) {
+                context.currentUser = currentUser;
+            }
+            res.render('userUpdate.ejs', context)
         })
     } else {
         res.redirect(`/users/${req.params.id}`);

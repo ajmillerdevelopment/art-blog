@@ -59,6 +59,9 @@ app.get('/contact', (req, res) => {
         const context = {
             users: foundUsers
         };
+        if (req.session.currentUser) {
+            context.currentUser = currentUser;
+        }
         res.render('contact', context);
     })
 }) 
