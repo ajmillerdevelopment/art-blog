@@ -3,14 +3,25 @@
 <head>
     <%- include('./partials/head') %>
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="css/gallery.css">
     <title>Blog Home</title>
 </head>
 <body>
     <%- include('./partials/header') %> 
     <%- include('./partials/nav') %>
     <main>
-        <div class="gallery box">Gallery</div>
-        <div class="hero box">Hero</div>
+        <div class="gallery box">
+            <% for (let image of images) { %>
+            <img src="<%= image.url %>" alt="">
+        <%  } %> 
+        </div>
+        <div class="hero box">
+            <article>
+            <h3><%= post.title %></h3>
+            <h6>By: <%= post.author.displayName %> </h6>
+            <p><%= post.body %> </p>
+         </article>
+        </div>
     </main>
 
     <%- include('./partials/footers') %>

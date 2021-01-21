@@ -1,13 +1,22 @@
 main {
     display: flex;
-    width: 80%;
+    width: 90%;
     height: 80%;
     flex-direction: row;
     align-items: stretch;
 }
-.gallery {
-    flex-grow: 3;
-}
 .hero {
     flex-grow: 2;
+    overflow: auto;
+    max-width: 300px;
+}
+.gallery {
+    flex-grow: 3;
+    overflow: auto;
+}
+.hero p {
+    padding: 4px;
+}
+.hero h3, h6{
+    text-shadow: 1px 1px purple;
 }
