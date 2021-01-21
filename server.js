@@ -45,6 +45,18 @@ app.get('/login', (req, res) => {
     res.render('logIn');
 })
 
+// Route for handling contact page
+
+app.get('/contact', (req, res) => {
+    db.User.find({}, (err, foundUsers) => {
+        if (err) throw err;
+        const context = {
+            users: foundUsers
+        };
+        res.render('contact', context);
+    })
+}) 
+
 // Route for handling login requests
 
 app.post('/login', (req, res) => {
