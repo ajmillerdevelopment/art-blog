@@ -27,7 +27,9 @@
             </div>
         </article>
     <% } %>   
+    <% if (currentUser._id === user._id) { %> 
     <a href="./<%= user._id %>/edit"> <button>Edit Profile</button> </a>
     <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
+    <% } %> 
 </body>
 </html>

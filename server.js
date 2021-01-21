@@ -26,17 +26,22 @@ app.use('/users', userController);
 app.use('/blog', blogController);
 app.get('/', (req, res)  => {
     db.User.find({}, (err, foundUsers) => {
-    db.Image.find({}, (err, foundImages) => {
-    db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
-      const context = {users: foundUsers, images: foundImages, post: foundPost}
-      if (req.session.currentUser) {
-        context.currentUser = req.session.currentUser;
-    }
-      res.render('home.ejs', context)
-    })
-})
-})});
-
+        db.Image.find({}, (err, foundImages) => {
+            db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
+                const context = {
+                    users: foundUsers, 
+                    images: foundImages, 
+                    post: foundPost,
+                    currentUser: null
+                }
+                if (req.session.currentUser) {
+                    context.currentUser = req.session.currentUser;
+                }
+                console.log(foundPost);
+                res.render('home.ejs', context)
+            })
+        })
+    })})
 // Route for logging out
 
 app.get('/logout', (req, res) => {
@@ -52,14 +57,22 @@ app.get('/login', (req, res) => {
     res.render('logIn');
 })
 
+app.get('/loginfailed', (req, res) => {
+    res.render('loginfailed')
+})
+
 // Route for handling contact page
 
 app.get('/contact', (req, res) => {
     db.User.find({}, (err, foundUsers) => {
         if (err) throw err;
         const context = {
-            users: foundUsers
+            users: foundUsers,
+            currentUser: null
         };
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
+        }
         res.render('contact', context);
     })
 }) 
@@ -71,6 +84,7 @@ app.post('/login', (req, res) => {
         if (err) throw err;
         if (!foundUser) {
             console.log('no user with that username found');
+            res.redirect('/loginfailed')
         }
         bcrypt.compare(req.body.password, foundUser.password, (err, resolved) => {
             if (err) throw err;
@@ -80,7 +94,7 @@ app.post('/login', (req, res) => {
                 res.redirect(`/users/${foundUser._id}`);
             } else {
                 console.log('credentials didnt match')
-                res.redirect('/login');
+                res.redirect('/loginfailed');
             }
         })
     })

@@ -30,7 +30,8 @@ router.use(flash());
 
 // Route for displaying page to create new users
 router.get('/new', (req, res) => {
-    res.render('userNew');
+    const context = {currentUser: null}
+    res.render('userNew', context);
 });
 
 
@@ -54,13 +55,6 @@ router.post('/new', (req, res) => {
         })
     });  
 });
-
-// Route for rendering login page
-
-
-
-
-
 
 
 router.put('/:id', (req, res) => {
@@ -90,7 +84,11 @@ router.get('/:id', (req, res) => {
         if (err) throw err
         console.log('foundUser', foundUser)
         const context = {
-            user: foundUser
+            user: foundUser,
+            currentUser: null
+        }
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
         }
         res.render('userProfile.ejs', context)
     })
@@ -98,14 +96,24 @@ router.get('/:id', (req, res) => {
 
 
 router.get('/:id/edit', (req, res) => {
-    if (req.session.currentUser && req.session.currentUser._id === req.params.id) {        
+    if (!req.session.currentUser) {
+        res.redirect('/login');
+    } else {
+        if (req.session.currentUser._id === req.params.id) {       
         db.User.findById(req.params.id, (err, foundUser) => {
-            res.render('userUpdate.ejs', {user: foundUser})
+            const context = {
+                user: foundUser,
+                currentUser: null
+            };
+            if (req.session.currentUser) {
+                context.currentUser = req.session.currentUser;
+            }
+            res.render('userUpdate.ejs', context)
         })
     } else {
         res.redirect(`/users/${req.params.id}`);
     }
-})
+}})
 
 router.post('/:id/blog', upload.array('images'), (req, res) => {
     console.log(req.body);
