@@ -26,16 +26,12 @@ app.use('/users', userController);
 app.use('/blog', blogController);
 app.get('/', (req, res)  => {
     db.User.find({}, (err, foundUsers) => {
-    db.Image.find({}, (err, foundImages) => {
-    db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
-      const context = {users: foundUsers, images: foundImages, post: foundPost}
-      if (req.session.currentUser) {
-        context.currentUser = currentUser;
-    }
-      res.render('home.ejs', context)
-    })
-})
-})});
+        db.Image.find({}, (err, foundImages) => {
+            db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
+                res.render('home.ejs', {users: foundUsers, images: foundImages, post: foundPost})    
+            })
+        })
+    })})
 
 // Route for logging out
 
