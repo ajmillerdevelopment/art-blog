@@ -30,7 +30,7 @@ app.get('/', (req, res)  => {
     db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
       const context = {users: foundUsers, images: foundImages, post: foundPost}
       if (req.session.currentUser) {
-        context.currentUser = currentUser;
+        context.currentUser = req.session.currentUser;
     }
       res.render('home.ejs', context)
     })
