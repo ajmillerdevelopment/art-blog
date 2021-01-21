@@ -17,9 +17,11 @@
         </div>
         <div class="hero box">
             <article>
+            <% if (post) { %> 
             <a href="/"><h3><%= post.title %></h3></a>
             <h6>By: <%= post.author.displayName %> </h6>
             <p><%= post.body %> </p>
+            <% } %>
          </article>
         </div>
     </main>
