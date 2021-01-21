@@ -26,7 +26,13 @@ app.use('/users', userController);
 app.use('/blog', blogController);
 app.get('/', (req, res)  => {
     db.User.find({}, (err, foundUsers) => {
-        res.render('home.ejs', {users: foundUsers})
+        const context = {
+            users: foundUsers
+        };
+        if (req.session.currentUser) {
+            context.currentUser = currentUser;
+        }
+        res.render('home.ejs', context);
     })
 });
 
@@ -69,3 +75,5 @@ app.post('/login', (req, res) => {
 
 app.set('view engine', 'ejs')
 app.listen(PORT, console.log(`Listening on ${PORT}`))
+
+
