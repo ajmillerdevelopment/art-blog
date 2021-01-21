@@ -82,13 +82,14 @@ router.get('/:id', (req, res) => {
     const userId = req.params.id;
     db.User.findById(userId).populate('posts').exec((err, foundUser) => {
         if (err) throw err
-        console.log('foundUser', foundUser)
+        // console.log('foundUser', foundUser)
         const context = {
             user: foundUser,
             currentUser: null
         }
         if (req.session.currentUser) {
             context.currentUser = req.session.currentUser;
+            console.log(req.session.currentUser)
         }
         res.render('userProfile.ejs', context)
     })
