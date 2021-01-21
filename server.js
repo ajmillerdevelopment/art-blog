@@ -28,11 +28,14 @@ app.get('/', (req, res)  => {
     db.User.find({}, (err, foundUsers) => {
         db.Image.find({}, (err, foundImages) => {
             db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
-                res.render('home.ejs', {users: foundUsers, images: foundImages, post: foundPost})    
+              const context = {users: foundUsers, images: foundImages, post: foundPost}
+              if (req.session.currentUser) {
+                context.currentUser = currentUser;
+            }
+              res.render('home.ejs', context)
             })
         })
     })})
-
 // Route for logging out
 
 app.get('/logout', (req, res) => {
@@ -47,6 +50,18 @@ app.get('/logout', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('logIn');
 })
+
+// Route for handling contact page
+
+app.get('/contact', (req, res) => {
+    db.User.find({}, (err, foundUsers) => {
+        if (err) throw err;
+        const context = {
+            users: foundUsers
+        };
+        res.render('contact', context);
+    })
+}) 
 
 // Route for handling login requests
 
@@ -72,3 +87,5 @@ app.post('/login', (req, res) => {
 
 app.set('view engine', 'ejs')
 app.listen(PORT, console.log(`Listening on ${PORT}`))
+
+
