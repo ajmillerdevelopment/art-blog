@@ -8,17 +8,25 @@
 <body>
     <%- include('./partials/header') %> 
     <h2>New User</h2>
-    <form action="/users" method="POST">
+    <form action="/users/new" method="POST">
         <div class="username">
-        <label for="username">Username: </label>
-        <input type="text" name="username" id="username"> <br>
+            <label for="username">Username: </label>
+            <input type="text" name="username" id="username"> <br>
         </div>
-        <!-- <label for="password">Password</label>
-        <input type="password" name="password" id="password"> -->
         <div class="displayname">
-        <label for="displayName">Display Name: </label>
-        <input type="text" name="displayName" id="displayName">
+            <label for="displayName">Display Name: </label>
+            <input type="text" name="displayName" id="displayName">
         </div>
+        <div>
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password">
+        </div>
+        <div>
+            <label for="email">Email Address: </label>
+            <input type="email" name="email" id="email">
+        </div>
+        
+       
         <button type="submit">Submit</button>
 
     </form>

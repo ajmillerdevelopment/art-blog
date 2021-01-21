@@ -3,19 +3,25 @@ const router = express.Router();
 const db = require('../models');
 
 
-
 // Handles user creating a new blog post, renders new blog page
 router.get('/:userId/new', (req, res) => {
     const userId = req.params.userId;
-    db.User.findById(userId, (err, foundUser) => {
-        if (err) {
-            return res.send(err);
-        }
-        console.log('Creating new post for:', foundUser.displayName)
-        res.render('blog/newBlog', {user: foundUser});
-    }); 
-
-
+    console.log(req.session.currentUser._id)
+    console.log(req.params.userId);
+    if (req.session.currentUser._id == req.params.userId) {
+        
+        db.User.findById(userId, (err, foundUser) => {
+            if (err) {
+                return res.send(err);
+            }
+            console.log('Creating new post for:', foundUser.displayName)
+            res.render('blog/newBlog', {user: foundUser});
+        }); 
+    } else {
+        res.redirect(`/users/${userId}`)
+        console.log('User Authentication failed');
+    }
+    
 });
 
 
@@ -26,6 +32,7 @@ router.get('/:postId/edit', (req, res) => {
         if (err) {
             return res.send(err);
         };
+        console.log(foundPost.author);
         const context = {
             post: foundPost
         };

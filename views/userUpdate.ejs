@@ -10,18 +10,22 @@
     <form action="/users/<%= user._id %>/?_method=PUT" method="POST">
         
         <label for="username">Username: </label>
-        <input type="text" name="username" id="username" value="<%= user.username %> ">
+        <input type="text" name="username" id="username" value="<%= user.username %>">
 
-        <!-- <label for="password">Password</label>
-        <input type="password" name="password" id="password"> -->
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" value="<%= user.email %>">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+
         <label for="displayName">Display Name</label>
-        <input type="text" name="displayName" id="displayName" value="<%= user.displayName %> ">
+        <input type="text" name="displayName" id="displayName" value="<%= user.displayName %>">
 
         <button type="submit">Submit</button>
         
 
     </form>
-    <form action="./<%= user._id %>/?_method=DELETE" method="POST">
+    <form action="/users/<%= user._id %>/?_method=DELETE" method="POST">
         <button type="submit">Delete Profile?</button>
     </form>
 </body>
