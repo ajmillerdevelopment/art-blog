@@ -28,11 +28,17 @@ app.get('/', (req, res)  => {
     db.User.find({}, (err, foundUsers) => {
         db.Image.find({}, (err, foundImages) => {
             db.Post.findOne({crosspost: true}).populate('author', 'displayName').exec((err, foundPost) => {
-              const context = {users: foundUsers, images: foundImages, post: foundPost}
-              if (req.session.currentUser) {
-                context.currentUser = currentUser;
-            }
-              res.render('home.ejs', context)
+                const context = {
+                    users: foundUsers, 
+                    images: foundImages, 
+                    post: foundPost,
+                    currentUser: null
+                }
+                if (req.session.currentUser) {
+                    context.currentUser = req.session.currentUser;
+                }
+                console.log(foundPost);
+                res.render('home.ejs', context)
             })
         })
     })})
@@ -60,7 +66,9 @@ app.get('/contact', (req, res) => {
             users: foundUsers
         };
         if (req.session.currentUser) {
-            context.currentUser = currentUser;
+            context.currentUser = req.session.currentUser;
+        }  else {
+            context.currentUser = null;
         }
         res.render('contact', context);
     })
