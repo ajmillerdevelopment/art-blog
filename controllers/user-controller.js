@@ -55,13 +55,6 @@ router.post('/new', (req, res) => {
     });  
 });
 
-// Route for rendering login page
-
-
-
-
-
-
 
 router.put('/:id', (req, res) => {
     console.log(req.body.password);
@@ -92,20 +85,32 @@ router.get('/:id', (req, res) => {
         const context = {
             user: foundUser
         }
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
+        }
         res.render('userProfile.ejs', context)
     })
 })
 
 
 router.get('/:id/edit', (req, res) => {
-    if (req.session.currentUser && req.session.currentUser._id === req.params.id) {        
+    if (!req.session.currentUser) {
+        res.redirect('/login');
+    } else {
+        if (req.session.currentUser._id === req.params.id) {       
         db.User.findById(req.params.id, (err, foundUser) => {
-            res.render('userUpdate.ejs', {user: foundUser})
+            const context = {
+                user: foundUser
+            };
+            if (req.session.currentUser) {
+                context.currentUser = req.session.currentUser;
+            }
+            res.render('userUpdate.ejs', context)
         })
     } else {
         res.redirect(`/users/${req.params.id}`);
     }
-})
+}})
 
 router.post('/:id/blog', upload.array('images'), (req, res) => {
     console.log(req.body);

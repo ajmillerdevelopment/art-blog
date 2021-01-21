@@ -15,13 +15,18 @@ router.get('/:userId/new', (req, res) => {
                 return res.send(err);
             }
             console.log('Creating new post for:', foundUser.displayName)
-            res.render('blog/newBlog', {user: foundUser});
+            const context = {
+                user: foundUser
+            };
+            if (req.session.currentUser) {
+                context.currentUser = req.session.currentUser;
+            }
+            res.render('blog/newBlog', context);
         }); 
     } else {
         res.redirect(`/users/${userId}`)
         console.log('User Authentication failed');
     }
-    
 });
 
 
@@ -36,6 +41,9 @@ router.get('/:postId/edit', (req, res) => {
         const context = {
             post: foundPost
         };
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
+        }
         res.render('blog/editBlog', context);
     })
 })
@@ -67,6 +75,9 @@ router.get('/gallery', (req, res) => {
         const context = {
             images: foundImages
         }
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
+        }
         res.render('blog/gallery', context)
     })   
 })
@@ -81,6 +92,9 @@ router.get('/collab', (req, res) => {
         const context = {
             posts: foundPosts
         };
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
+        };
         res.render('blog/collabBlog', context)
     })
 })
@@ -93,6 +107,9 @@ router.get('/:postId', (req, res) => {
         console.log(foundPost)
         const context = {
             post: foundPost
+        };
+        if (req.session.currentUser) {
+            context.currentUser = req.session.currentUser;
         };
         res.render('blog/blogDisplay', context)
     })
