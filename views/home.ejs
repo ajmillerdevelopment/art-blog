@@ -19,7 +19,7 @@
             <article>
             <% if (post) { %> 
             <a href="/blog/<%= post._id %>"><h3><%= post.title %></h3></a>
-            <h6>By: <%#= post.author.displayName %> </h6>
+            <h6>By: <%= post.author.displayName %> </h6>
             <p><%= post.body %> </p>
             <% } %>
          </article>
