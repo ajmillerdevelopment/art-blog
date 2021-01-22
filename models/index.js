@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/project2blog';
+const connectionString = process.env.MONGODB_URI || 'mongodb+srv://ajm9594:4w8HMrLdTe2x2Lk@sei1207-alex-tom-blog.0daqe.mongodb.net/blog?retryWrites=true&w=majority';
 const configObject = {
     useNewUrlParser: true,
     useUnifiedTopology: true,

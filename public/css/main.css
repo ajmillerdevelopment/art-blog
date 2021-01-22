@@ -19,10 +19,10 @@ h1 {
     margin: 20px 0 0;
 }
 h2 {
-    color: maroon;
+    color: purple;
     font-weight: bold;
     font-size: xx-large;
-    text-shadow: 1px 1px grey;
+    text-shadow: 1px 1px #f3f3f3;
 }
 a {
     text-decoration: none;
@@ -40,31 +40,46 @@ ul {
 }
 .navitem a {
     text-transform: uppercase;
+    font-size: large;
 }
 .box {
     background: rgba(255,255,255,0.5);
     margin: 20px;
     border-radius: 20px;
-    border: 4px solid maroon;
+    border: 2px solid maroon;
     max-width: 800px;
 }
 article p {
     color: purple;
 }
 button {
-    background-color: pink;
+    background-color: purple;
     border: none;
-    color: maroon;
-    padding: 10px 10px;
+    color: white;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
     font-weight: bold;
     border-radius: 20px;
-    border: 2px solid maroon;
     cursor: pointer;
+    height: 20px;
+    vertical-align: middle;
   }
   h6 {
     margin: 5px 10px;
+}
+.login {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+/* Shamelessly taken from CSS-Tricks.com */
+.grow { 
+    transition: all .2s ease-in-out; 
+    z-index: 2;
+}
+.grow:hover { transform: scale(1.05); }
+.gallery {
+    padding: 20px;
 }

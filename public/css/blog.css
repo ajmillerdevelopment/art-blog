@@ -1,6 +1,10 @@
 h2, h3 {
    margin: 5px; 
 }
+main {
+    display: flex;
+    flex-direction: row;
+}
 .box {
     display: flex;
     flex-direction: column;
@@ -11,9 +15,10 @@ article p {
     padding: 0 20px;
     text-align: justify;
 }
-article img {
+img {
     margin: 20px 40px;
-    max-width: 80%;
+    max-width: 400px;
+    max-height: 400px;
     border-radius: 5px;
     border: 2px solid white;
 }

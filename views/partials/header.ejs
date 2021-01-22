@@ -1,9 +1,12 @@
-
+<header>
+<a href="/"><h1 class="grow">Alex and Tom's Art Blog</h1></a>
+<div class="login">
 <% if (currentUser !== null) { %>
     <a href="/users/<%= currentUser._id %>"><button><%= currentUser.username %></button></a>
 <% } else { %>
     <a href="/login"><button>Log In</button></a>
 <% } %>
-
-<a href="/"><h1>Alex and Tom's Art Blog</h1></a>
-
+<% if (currentUser !== null) { %>
+    <a href="/logout"><button>Log Out</button></a>
+<% } %> </div>
+</header>
