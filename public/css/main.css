@@ -19,10 +19,10 @@ h1 {
     margin: 20px 0 0;
 }
 h2 {
-    color: maroon;
+    color: purple;
     font-weight: bold;
     font-size: xx-large;
-    text-shadow: 1px 1px grey;
+    text-shadow: 1px 1px #f3f3f3;
 }
 a {
     text-decoration: none;
@@ -53,18 +53,18 @@ article p {
     color: purple;
 }
 button {
-    background-color: pink;
+    background-color: purple;
     border: none;
-    color: maroon;
-    padding: 10px 10px;
+    color: white;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
     font-weight: bold;
     border-radius: 20px;
-    border: 2px solid maroon;
     cursor: pointer;
+    height: 20px;
+    vertical-align: middle;
   }
   h6 {
     margin: 5px 10px;
