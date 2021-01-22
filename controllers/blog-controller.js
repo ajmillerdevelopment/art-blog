@@ -66,8 +66,12 @@ router.put('/:postId', (req, res) => {
 router.delete('/:postId', (req, res) => {
     db.Post.findByIdAndDelete(req.params.postId, (err, deletedPost) => {
         if (err) throw err
+        for (let image of deletedPost.images) {
+            db.Image.findByIdAndDelete(image._id, (err, deletedImage) => {
+                console.log('Deleted image: ', deletedImage._id);
+            })
+        };
         res.redirect(`/users/${deletedPost.author}`);
-        console.log('Deleted post: ', deletedPost);
     })
 })
 
@@ -108,7 +112,8 @@ router.get('/:postId', (req, res) => {
     const postId = req.params.postId;
     db.Post.findById(postId).populate('author').populate('images').exec((err, foundPost) => {
         if (err) throw err;
-        console.log(foundPost)
+        console.log('found post: ', foundPost)
+        console.log('found images on that post: ', foundPost.images)
         const context = {
             post: foundPost,
             currentUser: null
