@@ -6,7 +6,12 @@
     <title>User Profile</title>
 </head>
 <body>
+
+    <% if (currentUser && currentUser._id == user._id) { %> 
+        <a href="./<%= user._id %>/edit"> <button>Edit Profile</button> </a>
+    <% } %> 
     <%- include('./partials/header') %> 
+    
     <h1><%= user.displayName %></h1>
     <% user.posts.sort((a, b) => (b.updatedAt - a.updatedAt)) %>
     <% for (let i = 0; i < user.posts.length; i++) { %>
@@ -26,9 +31,8 @@
             </form><% } %>
             <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6> 
             </div> 
-        </article>
+        </article> <% } %>
     <% if (currentUser && currentUser._id == user._id) { %> 
-    <a href="./<%= user._id %>/edit"> <button>Edit Profile</button> </a>
     <a href="/blog/<%= user._id %>/new"><button>New Blog Post</button></a>
     <% } %> 
 </body>
