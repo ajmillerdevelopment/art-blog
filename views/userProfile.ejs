@@ -18,13 +18,14 @@
             <!-- Images disabled on profile page -->
             <!-- <img src="<#%= user.posts[i].images[0] %>" alt="<#%= user.posts[i].captions[0] %>" srcset=""> -->
             <div class="article-buttons">
-    
+            <% if (currentUser && currentUser._id == user._id) { %>
             <a href="/blog/<%= user.posts[i]._id %>/edit"><button>Edit Post</button></a>
             <form action="../blog/<%= user.posts[i]._id %>/?_method=DELETE" method="POST">
                 <button type="submit">Delete Post?</button>
-            </form>
+            </form><% } %>
             <h6>Post Last Edited At: <%= user.posts[i].updatedAt %></h6>
             </div>
+            
         </article>
     <% } %>   
     <% if (currentUser && currentUser._id == user._id) { %> 
