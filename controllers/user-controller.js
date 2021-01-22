@@ -145,10 +145,16 @@ router.post('/:id/blog', upload.array('images'), (req, res) => {
 
 router.delete('/:id/', (req, res) => {
     db.User.findByIdAndDelete(req.params.id, (err, deletedUser) => {
-        if (err) {
-            console.log(err);
-            return res.send(err);
-        };
+        if (err) throw err;
+        for (let post of deletedUser.posts) {
+            db.Post.findByIdAndDelete(post._id, (err, deletedPost) => {
+                for (let image of deletedPost.images) {
+                    db.Image.findByIdAndDelete(image._id, (err, deletedImage) => {
+                        console.log('Deleted image: ', deletedImage._id);
+                    })
+                };
+            })
+        }
         res.redirect('/');
         console.log('Deleted user: ', deletedUser);
     })
