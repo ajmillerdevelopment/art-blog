@@ -12,7 +12,7 @@
     <main>
         <div class="gallery box">
             <% for (let image of images) { %>
-            <img src="<%= image.url %>" alt="">
+            <a href="/blog/<%= image.post[0] %>"><img src="<%= image.url %>" alt=""></a>
         <%  } %> 
         </div>
         <div class="hero box">
