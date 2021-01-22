@@ -1,5 +1,6 @@
 <header>
-<a href="/"><h1>Alex and Tom's Art Blog</h1></a><div class="login">
+<a href="/"><h1 class="grow">Alex and Tom's Art Blog</h1></a>
+<div class="login">
 <% if (currentUser !== null) { %>
     <a href="/users/<%= currentUser._id %>"><button><%= currentUser.username %></button></a>
 <% } else { %>
