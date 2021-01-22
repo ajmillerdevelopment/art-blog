@@ -1,6 +1,5 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+require('dotenv').config();
+
 
 const express = require('express');
 const router = express.Router();
@@ -11,15 +10,14 @@ const flash = require('express-flash');
 const multer = require('multer')
 
 //for multer, sets storage directory and filename
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './public/images')
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
+const storage = multer.memoryStorage()
 const upload = multer({storage: storage})
+
+const AWS = require('aws-sdk')
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+})
 
 const { resolveInclude } = require('ejs');
 
@@ -118,17 +116,23 @@ router.get('/:id/edit', (req, res) => {
 
 router.post('/:id/blog', upload.array('images'), (req, res) => {
     console.log(req.body);
+    console.log(process.env.AWS_ACCESS_KEY_ID)
     const authorID = req.params.id
     db.Post.create(req.body, (err, createdPost) => {
         if (err) throw err 
         console.log(createdPost)
         for (let file of req.files) {
-            db.Image.create({name: file.originalname, url: '/images/' + file.filename, post: createdPost._id}, (err, createdImage) => {
-                if (err) throw err
-                console.log(createdImage)
-                db.Post.findByIdAndUpdate(createdPost._id, {$push: {images: createdImage._id}}, {new: true}, (err, updatedpost) => {if (err) throw err})
-
+            s3.upload({Bucket: process.env.S3_BUCKET_NAME, Key: file.originalname, Body: file.buffer, ACL: "public-read"}, (err, data) => {
+                if (err) throw err;
+                const location = data.Location
+                console.log(`Uploaded to ${location}`)
+                db.Image.create({name: file.originalname, url: location, post: createdPost._id}, (err, createdImage) => {
+                    if (err) throw err
+                    console.log(createdImage)
+                    db.Post.findByIdAndUpdate(createdPost._id, {$push: {images: createdImage._id}}, {new: true}, (err, updatedpost) => {if (err) throw err})
             })
+            })
+            
         }
         db.User.findByIdAndUpdate(authorID, {$push: {posts: createdPost._id}}, {new: true}, (err, updatedUser) => {if(err){console.log(err)}})
         db.Post.findByIdAndUpdate(createdPost._id, {author: authorID}, (err, foundAuthor) => {
