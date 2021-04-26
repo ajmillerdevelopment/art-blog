@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -6,7 +7,6 @@ const PORT = process.env.PORT || 4000
 const db = require('./models');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-
 const userController = require('./controllers/user-controller.js')
 const blogController = require('./controllers/blog-controller.js')
 

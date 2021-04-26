@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-const connectionString = process.env.MONGODB_URI || 'mongodb+srv://ajm9594:4w8HMrLdTe2x2Lk@sei1207-alex-tom-blog.0daqe.mongodb.net/blog?retryWrites=true&w=majority';
+const connectionString = process.env.MONGODB_URI 
 const configObject = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
 };
-
+console.log(process.env.MONGODB_URI)
+console.log(connectionString)
 mongoose.connect(connectionString, configObject);
 
 mongoose.connection.on('connected', () => {
